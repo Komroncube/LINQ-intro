@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Queries.Run();
+            //Queries.Run();
+            SeconDayQueries.Run();
         }
     }
 }

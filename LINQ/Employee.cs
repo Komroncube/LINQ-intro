@@ -8,7 +8,7 @@
         public int Age { get; set; }
         public float Salary { get; set; }
         public string? Level { get; set; }
-        public List<string>? Companies { get; set; }
+        public List<string> Skills { get; set; }
         public List<string> Languages { get; set; }
         public static List<Employee> GetEmployees()
         {
@@ -22,7 +22,7 @@
                     LastName = "Jurayev",
                     Salary = 200,
                     Level = "Stajor",
-                    Companies = new List<string>
+                    Skills = new List<string>
                     {
                         "item 1", "item 2"
                     },
@@ -39,7 +39,7 @@
                     LastName = "Xaryriddinova", 
                     Salary = 300, 
                     Level = "Middle",
-                    Companies = new List<string>
+                    Skills = new List<string>
                     {
                         "item 1", "item 2"
                     },
@@ -48,7 +48,22 @@
                         "koreys tili", "xitoy tili"
                     }
                 },
-                //new Employee() { Id = 1003, Age = 20, FirstName = "Nurmuhammad", LastName = "Sharobiddinov", Salary = 240, Level = "Junior" },
+                new Employee() { 
+                    Id = 1003, 
+                    Age = 20, 
+                    FirstName = "Nurmuhammad", 
+                    LastName = "Sharobiddinov", 
+                    Salary = 240, 
+                    Level = "Junior",
+                    Skills = new List<string>
+                    {
+                        "gapirish", "eshitish"
+                    },
+                    Languages = new List<string>
+                    {
+                        "xitoy tili", "rus tili"
+                    }
+                },
                 //new Employee() { Id = 1004, Age = 20, FirstName = "Bahriddin", LastName = "Abdusalomov", Salary = 1600, Level = "Strong Junior" },
                 //new Employee() { Id = 1005, Age = 23, FirstName = "Nurmuhammad", LastName = "Sharobiddinov", Salary = 450, Level = "Middle" },
                 //new Employee() { Id = 1005, Age = 23, FirstName = "Muhammad Abdulloh", LastName = "Komilov", Salary = 1700, Level = "Strong Middle" },

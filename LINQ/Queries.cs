@@ -112,6 +112,7 @@
 
 
             #region homework
+            /*
             var colls = employees.SelectMany(x => x.Companies,
                 (parent, child) => new { 
                     emp = parent,
@@ -128,7 +129,23 @@
             {
                 Console.WriteLine(coll);
             }
+            */
             #endregion
+
+            //var res = employees.ToLookup(item => item.Id).ToList();
+            //foreach (var item in res)
+            //{
+            //    Console.Write(item.Key);
+            //    foreach (var x in item)
+            //    {
+            //        Console.WriteLine(x.FirstName + " " + x.LastName);
+            //    }
+            //}
+            var sorting = employees.OrderByDescending(x => x.Age).ThenBy(x => x.FirstName);
+            foreach(var item in sorting)
+            {
+                Console.WriteLine(item.FirstName + item.Age);
+            }
 
         }
     }
