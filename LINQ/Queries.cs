@@ -1,4 +1,6 @@
-﻿namespace LINQ
+﻿using System.Threading.Channels;
+
+namespace LINQ
 {
     public class Queries
     {
@@ -141,11 +143,13 @@
             //        Console.WriteLine(x.FirstName + " " + x.LastName);
             //    }
             //}
-            var sorting = employees.OrderByDescending(x => x.Age).ThenBy(x => x.FirstName);
-            foreach(var item in sorting)
-            {
-                Console.WriteLine(item.FirstName + item.Age);
-            }
+            //var sorting = employees.OrderByDescending(x => x.Age).ThenBy(x => x.FirstName);
+            //foreach(var item in sorting)
+            //{
+            //    Console.WriteLine(item.FirstName + item.Age);
+            //}
+
+            
 
         }
     }
