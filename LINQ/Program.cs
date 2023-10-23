@@ -1,4 +1,6 @@
-﻿namespace LINQ
+﻿using LINQ.ThirdDay;
+
+namespace LINQ
 {
     internal class Program
     {
@@ -6,7 +8,8 @@
         {
             //Queries.Run();
             //SeconDayQueries.Run();
-            Homework_22_10_2023.task17();
+            //Homework_22_10_2023.task17();
+            Query.Run();
         }
     }
 }

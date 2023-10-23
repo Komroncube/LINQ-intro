@@ -1,6 +1,6 @@
 ﻿namespace LINQ
 {
-    public class Student
+    public class Student : IEquatable<Student>
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -142,5 +142,25 @@
                     UniversityFaculty = "Kareys tili", Course = 2 , isDistance = false},
         };
 
+        public bool Equals(Student? other)
+        {
+            // Taqqoslanayotgan obyektlarni null yoki null emasligini tekshirish
+            if (ReferenceEquals(other, null)) return false;
+
+            // Taqqoslanayotgan obyektlar aynan bitta ma'lumotning havolasimi yoki yo'qligini tekshirish        
+            if (ReferenceEquals(this, other)) return true;
+
+            // Taqqoslanayotgan obyektlarning barcha xususiyat (property)lari bir xil ekanligini tekshirish
+            return Id.Equals(other.Id)
+                    && FirstName.Equals(other.FirstName)
+                    && LastName.Equals(other.LastName)
+                    && Age.Equals(other.Age)
+                    && Credit.Equals(other.Credit)
+                    && Contract.Equals(other.Contract)
+                    && UniversityName.Equals(other.UniversityName);
+                    
+                    
+                    ;
+        }
     }
 }
