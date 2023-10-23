@@ -5,7 +5,8 @@
         static void Main(string[] args)
         {
             //Queries.Run();
-            SeconDayQueries.Run();
+            //SeconDayQueries.Run();
+            Homework_22_10_2023.task17();
         }
     }
 }
