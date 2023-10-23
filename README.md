@@ -1,2 +1,2 @@
 # LINQ-intro
-uy ishi homework region ichida
+22-10-2023 class ichida
