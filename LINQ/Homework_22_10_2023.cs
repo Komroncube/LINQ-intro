@@ -1,4 +1,7 @@
-﻿namespace LINQ
+﻿using LINQ.ThirdDay;
+using System.Threading.Tasks.Dataflow;
+
+namespace LINQ
 {
     public class Homework_22_10_2023
     {
@@ -178,14 +181,15 @@
                 Console.WriteLine("{0} File(s) with .{1} extension ",x.Count(),  x.Key );
             }
         }
-
         public static void task16()
         {
-
+            Console.Write("Papka yo'lini kiriting: ");
+            string path = Console.ReadLine();
+            var dir = new DirectoryInfo(path);
+            var files = dir.GetFiles();
+            var avg = files.Average(x => x.Length);
+            Console.WriteLine($"O'rtacha {avg/Math.Pow(2,20)} MB");
         }
-
-
-
         public static void task17()
         {
             Console.Write("Enter word to input: ");
@@ -202,7 +206,143 @@
             items.Remove(items.Find(x => string.Equals(x, removeitem)));
             PrintValues(items);
         }
-
+        public static void task19()
+        {
+            Console.Write("Enter word to input: ");
+            var items = new List<string>() { "item1", "item2", "item3", "item4", "item5", "item6" };
+            var removeitem = Console.ReadLine().Trim();
+            items.RemoveAll(x=>x==removeitem);
+            PrintValues(items);
+        }
+        public static void task20()
+        {
+            Console.Write("Enter index to input: ");
+            var items = new List<string>() { "item1", "item2", "item3", "item4", "item5", "item6" };
+            var index = GetNumber();
+            items.RemoveAt(index-1);
+            PrintValues(items);
+        }
+        public static void task21()
+        {
+            var items = new List<string>() { "item1", "item2", "item3", "item4", "item5", "item6" };
+            Console.Write("Enter starting index to input: ");
+            var index = GetNumber();
+            Console.Write("Enter count of elements to delete: ");
+            var count = GetNumber();
+            var maxcount = items.Count - index;
+            items.RemoveRange(index - 1,count>maxcount?maxcount+1:count);
+            PrintValues(items);
+        }
+        public static void task22()
+        {
+            Console.Write("Input number of strings to store in the array : ");
+            var n = GetNumber();
+            Console.WriteLine("Input {0} strings for the array : ", n);
+            var words = new string[n];
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write("Element[{0}]: ", i);
+                words[i] = Console.ReadLine();
+            }
+            Console.Write("Input the minimum length of the item you want to find : ");
+            var min = GetNumber();
+            var result = words.Where(x=> x.Length>min);
+            PrintValues(result);
+        }
+        public static void task23()
+        {
+            var result = items.Select(item => new { item, items });
+            //PrintValues(result);
+            foreach(var item in result)
+            {
+                Console.WriteLine();
+                foreach(var x in item.items)
+                {
+                    Console.WriteLine(item.item + "     " + x);
+                }
+            }
+        }
+        public static void task24()
+        {
+            var employees = Employee.GetEmployees();
+            var res1 = employees.SelectMany(emp => items.Select(x=> new {name = emp.FirstName, first=x}));
+            var result = res1.SelectMany(x => items.Select(y => new { x.name, x.first, y }));
+            foreach(var item in result)
+            {
+                Console.WriteLine(item);
+            }
+        }
+        public static void task25()
+        {
+            var teachers = Teacher.GetAllTeachers();
+            var students = Student.GetAllStudents;
+            var result = teachers.Join(students,
+                teacher => teacher.TechCourse,
+                student => student.Course,
+                (teacher, student) => new
+                {
+                    teacher = teacher,
+                    student = student,
+                });
+            //PrintValues(result);
+            foreach(var gr in result)
+            {
+                Console.WriteLine($"Course: {gr.teacher.TechCourse};    Teacher: {gr.teacher.FirstName};     Student: {gr.student.FirstName} Course: {gr.student.Course} ");
+            }
+        }
+        public static void task26()
+        {
+            var teachers = Teacher.GetAllTeachers();
+            var students = Student.GetAllStudents;
+            var result = students.GroupJoin(teachers,
+                std => std.Course,
+                teacher => teacher.TechCourse,
+                (std, teacher) => new
+                {
+                    Course = std.Course,
+                    stdname = std.FirstName +" "+ std.LastName,
+                    teachers = teacher.DefaultIfEmpty()
+                }).SelectMany(x=>x.teachers.Select(t=>new {x.Course, x.stdname, teacher = t}));
+            Console.WriteLine();
+            PrintValues(result);
+        }
+        public static void task27()
+        {
+            var teachers = Teacher.GetAllTeachers();
+            var students = Student.GetAllStudents;
+            var result = teachers.GroupJoin(students,
+                teacher => teacher.TechCourse,
+                std => std.Course,
+                (teacher, std) => new
+                {
+                    teacher = teacher,
+                    students = std.DefaultIfEmpty(),
+                }).SelectMany(x => x.students.Select(std => new { name = x.teacher.FirstName, students = std }));
+            PrintValues(result);
+        }
+        public static void task28()
+        {
+            var students = Student.GetAllStudents.Select(x => x.FirstName);
+            var result = students.OrderBy(x => x.Length);
+            PrintValues(result);
+        }
+        public static void task29()
+        {
+            var students = Student.GetAllStudents.Select(x => x.FirstName).ToList();
+            var result = Enumerable.Range(0, students.Count()).GroupBy(i => i / 3, i => students[i]);
+            foreach(var item in result)
+            {
+                PrintValues(item);
+                Console.WriteLine();
+            }
+        }
+        public static void task30()
+        {
+            var students = Student.GetAllStudents;
+            var result = students.Select(x => x.FirstName).Distinct().Order();
+            PrintValues(result);
+        }
+        public static List<string> items = new List<string>() { "item1", "item2", "item3", "item4", "item5", "item6" };
         public static int GetNumber()
         {
         GetNumber:

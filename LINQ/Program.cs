@@ -8,8 +8,8 @@ namespace LINQ
         {
             //Queries.Run();
             //SeconDayQueries.Run();
-            //Homework_22_10_2023.task17();
-            Query.Run();
+            //Query.Run();
+            Homework_22_10_2023.task30();
         }
     }
 }

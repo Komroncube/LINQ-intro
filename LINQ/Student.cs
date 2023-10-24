@@ -111,7 +111,7 @@
 
                 new Student { Id = 3, FirstName = "Hushnud", LastName = "Kamolov", Age = 33, Credit = 21,
                     Contract = 10_200_000, UniversityBranch = "Samarqand", UniversityName = "SAMDU",
-                    UniversityFaculty = "Fizika", Course = 2, isDistance = false },
+                    UniversityFaculty = "Fizika", Course = 5, isDistance = false },
 
                 new Student { Id = 4, FirstName = "Mirqosim", LastName = "Uzoqov", Age = 28, Credit = 40,
                     Contract = 7_000_100, UniversityBranch = "Buhoro", UniversityName = "INHA",
