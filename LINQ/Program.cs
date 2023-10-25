@@ -1,4 +1,5 @@
-﻿using LINQ.ThirdDay;
+﻿using LINQ.FourthDay;
+using LINQ.ThirdDay;
 
 namespace LINQ
 {
@@ -8,8 +9,10 @@ namespace LINQ
         {
             //Queries.Run();
             //SeconDayQueries.Run();
-            //Query.Run();
-            Homework_22_10_2023.task30();
+            Query.Run();
+            //Homework_22_10_2023.task30();
+            //Teacher.GetAllTeachers();
+            //QueryFourthday.Run();
         }
     }
 }
