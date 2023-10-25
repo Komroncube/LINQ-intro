@@ -208,11 +208,14 @@ namespace LINQ
         }
         public static void task19()
         {
-            Console.Write("Enter word to input: ");
-            var items = new List<string>() { "item1", "item2", "item3", "item4", "item5", "item6" };
-            var removeitem = Console.ReadLine().Trim();
-            items.RemoveAll(x=>x==removeitem);
-            PrintValues(items);
+            //Console.Write("Enter word to input: ");
+            //var items = new List<string>() { "item1", "item2", "item3", "item4", "item5", "item6" };
+            //var removeitem = Console.ReadLine().Trim();
+            //items.RemoveAll(x => x == removeitem);
+            //PrintValues(items);
+            var nums = new int[] { 3, 3, 4, 5, };
+            var res = nums.FirstOrDefault(x => x == 9);
+            Console.WriteLine(res);
         }
         public static void task20()
         {
