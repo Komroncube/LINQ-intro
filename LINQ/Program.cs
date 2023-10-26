@@ -15,7 +15,9 @@ namespace LINQ
             //Teacher.GetAllTeachers();
             //QueryFourthday.Run();
             //Crud.GetByExpression("Fruits", "LMS", "id>3");
-            Crud.InsertData("Fruits", "LMS", "59, 'qulupnay', 500, 5000");
+            //Crud.InsertData("Fruits", "LMS", "59, 'qulupnay', 500, 5000");
+            //Crud.DeleteTable("MyNewBackUpTable", "LMS");
+            Crud.UpdateTable("fruits", "LMS", "7, 'Nok', 99999, 999999");
         }
     }
 }
