@@ -109,7 +109,6 @@ namespace LINQ.FifthDay
                 }
                 var joinedItems = columns.Skip(1).Zip(values.Skip(1), (item1, item2) => $"{item1} = {item2.Trim()}");
                 var update = string.Join(",", joinedItems);
-                update = update.Substring(0, update.Length - 1);
                 
                 var createQuery = $"Update {tablename} set {update} where {columns[0]} = {values[0]}";
                 sqlCommand = new SqlCommand(createQuery, connection);
