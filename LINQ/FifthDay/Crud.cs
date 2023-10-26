@@ -67,5 +67,18 @@ namespace LINQ.FifthDay
 
             }
         }
+        public static void DeleteTable(string tablename, string database)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = $"Server=DOTNET-DEVELOPE;Database={database};Trusted_Connection=True;";
+                connection.Open();
+                string query = $"drop table {tablename}";
+                SqlCommand sqlCommand = new SqlCommand(query, connection);
+                sqlCommand.ExecuteNonQuery();
+            }
+
+
+        }
     }
 }
