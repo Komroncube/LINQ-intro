@@ -45,10 +45,37 @@ namespace LINQ.Homework24_10_2023
             bool check = UserService.isExist(user.Name);
             if(check)
             {
-                Console.WriteLine("Username ni qaytadan kiriting");
+                Console.WriteLine("Bunday username mavjud, boshqa usernameni kiriting");
+                goto name;
             }
 
-            Console.WriteLine("Parolni kiriting: ");
+        pass:
+            Console.WriteLine("Parolni kiriting (kamida 4ta belgi): ");
+            user.Password = Console.ReadLine();
+            if(user.Password.Length<4)
+            {
+                Console.WriteLine("Xato parol kiritildi.");
+                goto pass;
+            }
+
+            Console.WriteLine("Davlatni kiriting: ");
+            user.Country = Console.ReadLine();
+
+            Console.WriteLine("Shaharni kiriting: ");
+            user.City = Console.ReadLine();
+
+            var res = UserService.CreateUser(user);
+            if (res==0)
+            {
+                Console.WriteLine("User yaratilmadi :(");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else
+            {
+                Console.WriteLine("User yaratildi :)");
+            }
+            Greeting();
         }
         
     }
