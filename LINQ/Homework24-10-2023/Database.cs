@@ -14,17 +14,16 @@ namespace LINQ.Homework24_10_2023
         }
         public static void Initiate()
         {
-            using (SqlConnection connection = new SqlConnection("context connection=true"))
+            using (SqlConnection connection = new SqlConnection("trusted_connection=true"))
             {
                 connection.Open();
-                string query = " IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'DataBase') " +
+                string query = "IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'MessengerDemo') " +
                                     "BEGIN" +
                                     "    CREATE DATABASE [MessengerDemo]" +
-                                    "    END" +
-                                    "    GO" +
-                                    "       USE [MessengerDemo]" +
-                                    "    GO" +
-                                    "IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Users' and xtype='U')" +
+                                    //"    END;" +
+                                    "       USE [MessengerDemo]; " +
+                                    "END "+
+                                    "IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Users' and xtype='U') " +
                                     "BEGIN" +
                                     "    create table Users(" +
                                     "       Id integer IDENTITY(1,1) primary key," +
@@ -35,9 +34,9 @@ namespace LINQ.Homework24_10_2023
                                     "       CREATED_AT DATETIME DEFAULT GETDATE()," +
                                     "       UPDATE_AT DATETIME," +
                                     "    );" +
-                                    "END" +
-                                    "IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Messages' and xtype='U')" +
-                                    "BEGIN" +
+                                    "END;\n" +
+                                    "IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Messages' and xtype='U') " +
+                                    "BEGIN\n" +
                                     "    create table Messages (" +
                                     "       id integer IDENTITY(1,1) primary key," +
                                     "       SenderId integer foreign key REFERENCES Users(id)," +
@@ -45,7 +44,7 @@ namespace LINQ.Homework24_10_2023
                                     "       MessageText text," +
                                     "       Created_at datetime default getdate()," +
                                     "); " +
-                                    "END";
+                                    "END;";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
 

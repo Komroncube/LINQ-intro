@@ -6,34 +6,38 @@ public class UserService : Database
     {
         connection.Open();
 
-        string query = $"Insert into Users(user_name, user_pass, country, city) values ({user.Name}, {user.Password}, {user.Country}, {user.City});";
+        string query = $"Insert into Users(user_name, user_pass, country, city) values ('{user.Name}', '{user.Password}', '{user.Country}', '{user.City}');";
         SqlCommand command = new SqlCommand(query, connection);
         
         var res = command.ExecuteNonQuery();
+        connection.Close();
         return res;
     }
-    public static int GetId(string username)
+    public static List<User> GetUsers() 
     {
         connection.Open();
-        connection.ConnectionString = ConnectionString;
-
-        string query = $"Select id from Users where user_name = {username}";
+        var users = new List<User>();
+        string query = $"Select id, user_name, user_pass from users";
         SqlCommand command = new SqlCommand(query, connection);
         using (SqlDataReader reader = command.ExecuteReader())
         {
-            string idstring = string.Empty;
-            while (reader.Read())
+            while(reader.Read())
             {
-                idstring = reader.GetString(0);
-                break;
+                var user = new User();
+                user.Id = int.Parse(reader[0].ToString());
+                user.Name = reader[1].ToString();
+                user.Password = reader[2].ToString();
+                users.Add(user);
             }
-            bool check = int.TryParse(idstring, out int id);
-            return id;
         }
-
+        connection.Close();
+        return users;
     }
     public static bool isExist(string username)
     {
-        return GetId(username) != 0;
+        var users = GetUsers();
+        User? user = users.FirstOrDefault(x=>x.Name==username);
+        return user != null;
+
     }
 }

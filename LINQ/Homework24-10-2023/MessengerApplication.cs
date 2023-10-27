@@ -8,12 +8,11 @@ namespace LINQ.Homework24_10_2023
     {
         public static void Run()
         {
-            
-            Console.WriteLine("Assalomu alaykum. Ketmon messengeriga xush kelibsiz");
+            Database.Initiate();
             Greeting();
             
         }
-        private static string currentUser;
+        private static int currentUser;
         private static void Greeting()
         {
             Console.WriteLine("Assalomu alaykum. Ketmon messengeriga xush kelibsiz");
@@ -28,11 +27,31 @@ namespace LINQ.Homework24_10_2023
                     Console.Clear();
                     Register(); 
                     break;
+                case "Exit":
+                    return;
             }
 
         }
         private static void Login()
         {
+            retylogin:
+            Console.Write("Username ni kiriting: ");
+            string username = Console.ReadLine();
+
+            Console.Write("Passwordni kiriting: ");
+            string pass = Console.ReadLine();
+
+            var users = UserService.GetUsers();
+            var user = users.FirstOrDefault(x=>x.Name==username && x.Password == pass);
+            if (user == null) 
+            {
+                Console.WriteLine("Username yoki password xato kiritildi.");
+                Console.Clear();
+                Console.WriteLine("Qaytadan kiriting.");
+                goto retylogin;
+            }
+            currentUser = user.Id;
+            SendMessage();
 
         }
         private static void Register()
@@ -65,11 +84,11 @@ namespace LINQ.Homework24_10_2023
             user.City = Console.ReadLine();
 
             var res = UserService.CreateUser(user);
+            Console.Clear();
             if (res==0)
             {
                 Console.WriteLine("User yaratilmadi :(");
                 Console.ReadKey();
-                Console.Clear();
             }
             else
             {
@@ -77,6 +96,65 @@ namespace LINQ.Homework24_10_2023
             }
             Greeting();
         }
+        private static void SendMessage()
+        {
+            recinput:
+            Console.Write("Kimga xabar yozmoqchisiz: ");
+            var recepient = Console.ReadLine();
+
+
+            var users = UserService.GetUsers();
+            var rec = users.FirstOrDefault(x=>x.Name ==  recepient);
+            if (rec==null)
+            {
+                Console.WriteLine("Bunday user topilmadi!");
+                goto recinput;
+            }    
+            var recId = rec.Id;
+
+            Console.Clear();
+            var messages = MessageService.GetMessages(currentUser, recId);
+            messages= messages.DistinctBy(x=>x.Id).ToList();
+            foreach(var message in messages)
+            {
+                if(message.RecepientId!=recId)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"FROM {rec.Name}:   {message.MessageText}");
+                }
+                else 
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"FROM you: {message.MessageText}");
+
+                }
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Xabar: ");
+            var text = Console.ReadLine();
+
+
+            MessageService.SendMessage(currentUser, recId, text);
+
+            Console.Clear();
+            Console.WriteLine("Xabar jo'natildi");
+
+            var choice = Prompt.Select("", new[] {"Bosh sahifaga qaytish", "Yana xabar jo'natish", "Dasturni tugatish" });
+            switch (choice)
+            {
+                case "Bosh sahifaga qaytish":
+                    Console.Clear();
+                    Greeting(); break;
+                case "Yana xabar jo'natish":
+                    Console.Clear();
+                    SendMessage();return;
+                case "Dasturni tugatish":
+                    return;
+            }
+
+        }
+        
         
     }
 }
