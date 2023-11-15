@@ -1,33 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace LINQ.FifthDay
+﻿namespace LINQ.FifthDay
 {
     public class Crud
     {
         public static void GetByExpression(string tablename, string database, string condition)
         {
-            using(SqlConnection connection = new SqlConnection()) 
+            using (SqlConnection connection = new SqlConnection())
             {
                 connection.ConnectionString = $"Server=DOTNET-DEVELOPE;Database={database};Trusted_Connection=True;";
                 connection.Open();
 
                 string query = $"select * from {tablename} where {condition}";
                 SqlCommand sqlCommand = new SqlCommand(query, connection);
-                using(SqlDataReader reader = sqlCommand.ExecuteReader())
+                using (SqlDataReader reader = sqlCommand.ExecuteReader())
                 {
                     var collection = reader.GetColumnSchema();
                     int count = reader.FieldCount;
                     while (reader.Read())
                     {
-                        for(int i=0; i<count; i++)
+                        for (int i = 0; i < count; i++)
                         {
                             Console.Write($"{reader[i]}\t");
                         }
@@ -65,7 +55,7 @@ namespace LINQ.FifthDay
                 sqlCommand = new SqlCommand(createQuery, connection);
                 var res = sqlCommand.ExecuteNonQuery();
                 Console.WriteLine($"{res} rows affected");
-               
+
 
             }
         }
@@ -109,10 +99,10 @@ namespace LINQ.FifthDay
                 }
                 var joinedItems = columns.Skip(1).Zip(values.Skip(1), (item1, item2) => $"{item1} = {item2.Trim()}");
                 var update = string.Join(",", joinedItems);
-                
+
                 var createQuery = $"Update {tablename} set {update} where {columns[0]} = {values[0]}";
                 sqlCommand = new SqlCommand(createQuery, connection);
-                
+
                 var res = sqlCommand.ExecuteNonQuery();
                 Console.WriteLine($"{res} rows affected");
 
